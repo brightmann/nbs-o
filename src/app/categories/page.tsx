@@ -1,8 +1,8 @@
 import { type Metadata } from 'next';
 import Link from 'next/link';
 
-import { allPosts } from '@contentlayer/generated';
 import { ROUTES } from '@semantic/constants';
+import { allPosts } from '@semantic/lib/content';
 import { generatePageMetadata, slugify } from '@semantic/utils';
 
 const CategoryListPage = () => {

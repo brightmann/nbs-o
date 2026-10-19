@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
-import { allPosts } from '@contentlayer/generated';
 import { METADATA, ROUTES } from '@semantic/constants';
+import { allPosts } from '@semantic/lib/content';
 import { slugify } from '@semantic/utils';
 
 export const dynamic = 'force-static';
@@ -16,10 +16,10 @@ const generateRssItems = (): {
 }[] =>
   allPosts
     .sort((a, b) => (dayjs(a.createdAt).isAfter(dayjs(b.createdAt)) ? -1 : 1))
-    .map(({ title, slug, body, modifiedAt, createdAt }) => {
+    .map(({ title, slug, mdxSource, modifiedAt, createdAt }) => {
       const date = modifiedAt ?? createdAt;
       const pubDate = dayjs(date).toDate().toUTCString();
-      const description = body.raw.replace(/^\s*(import|export)\s.*$/gm, '').trim();
+      const description = mdxSource.replace(/^\s*(import|export)\s.*$/gm, '').trim();
 
       return {
         title,

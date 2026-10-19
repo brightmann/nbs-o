@@ -1,10 +1,10 @@
 import { type Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { allPosts, Post } from '@contentlayer/generated';
 import { Divider, MdxComponent } from '@semantic/components/ui';
 import { Giscus } from '@semantic/components/ui/giscus';
 import { ROUTES, METADATA } from '@semantic/constants';
+import { allPosts, Post } from '@semantic/lib/content';
 import { generatePageMetadata } from '@semantic/utils';
 
 import { BackButton } from './_components/back-button';
@@ -28,7 +28,7 @@ const PostPage = async ({ params }: PostPageProps) => {
 
       <article>
         <Header {...post} />
-        <MdxComponent code={post.body.code} blurDataURLs={post.blurMap} />
+        <MdxComponent source={post.mdxSource} blurDataURLs={post.blurMap} />
 
         {post.comments && <Giscus className="mt-[3.5rem]" />}
 

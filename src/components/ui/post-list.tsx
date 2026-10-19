@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { ComponentProps } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import { Post } from '@contentlayer/generated';
 import { RelativeTime } from '@semantic/components/ui/index';
 import { ROUTES } from '@semantic/constants';
+import { Post } from '@semantic/lib/content';
 
 type PostListProps = ComponentProps<'ul'> & {
   className?: string;

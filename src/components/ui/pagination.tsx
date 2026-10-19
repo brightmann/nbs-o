@@ -11,6 +11,10 @@ type PaginationProps = {
 };
 
 export const Pagination = ({ currentPage, totalPages, basePath }: PaginationProps) => {
+  // Path-based SSG pager (page 1 lives at basePath itself). Hidden when there
+  // is only one page.
+  if (totalPages <= 1) return null;
+
   const generatePageRange = () => {
     let start = Math.max(1, currentPage - 2);
     let end = Math.min(totalPages, currentPage + 2);
@@ -26,7 +30,7 @@ export const Pagination = ({ currentPage, totalPages, basePath }: PaginationProp
 
   const buildPageHref = (page: number) => {
     const path = basePath.replace(/\/$/, '');
-    return `${path}?page=${page}`;
+    return page === 1 ? path : `${path}/page/${page}`;
   };
 
   const pageList = generatePageRange();

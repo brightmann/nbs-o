@@ -1,16 +1,28 @@
-'use client';
-
+// Server-side MDX renderer (replaces contentlayer's useMDXComponent).
+//
+// MDX is compiled during `next build` by next-mdx-remote/rsc — no
+// `new Function()` eval at runtime, which Cloudflare Workers forbids.
+// Component overrides are ported 1:1 from the old client-side MdxComponent.
 import Image from 'next/image';
-import { useMDXComponent } from 'next-contentlayer2/hooks';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import { ComponentProps } from 'react';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeSlug from 'rehype-slug';
+import remarkAlerts from 'remark-blockquote-alerts';
+
+import { GiscusTester } from '../mdx/giscus-tester';
 
 type MdxComponentProps = {
-  code: string;
+  source: string;
   blurDataURLs?: Record<string, { blur: string; ratio: number }>;
 };
 
-export const MdxComponent = ({ code, blurDataURLs = {} }: MdxComponentProps) => {
+export const MdxComponent = ({ source, blurDataURLs = {} }: MdxComponentProps) => {
   const components = {
+    // Interactive demo embedded by the setup-giscus-comments post
+    // (its `import ... from "./giscus-tester"` line is stripped at build time).
+    GiscusTester,
     h2: ({ children, ...props }: ComponentProps<'h2'>) => (
       <h2 className="pt-12 text-lg font-semibold" {...props}>
         {children}
@@ -67,11 +79,22 @@ export const MdxComponent = ({ code, blurDataURLs = {} }: MdxComponentProps) => 
     },
   };
 
-  const MDXComponent = useMDXComponent(code);
-
   return (
     <div className="column gap-[1.125rem]" data-mdx-article={true}>
-      <MDXComponent components={components} />
+      <MDXRemote
+        source={source}
+        components={components}
+        options={{
+          mdxOptions: {
+            remarkPlugins: [remarkAlerts],
+            rehypePlugins: [
+              rehypeSlug,
+              [rehypeAutolinkHeadings, { behavior: 'wrap' }],
+              [rehypePrettyCode, { theme: { dark: 'github-dark-dimmed', light: 'github-light' } }],
+            ],
+          },
+        }}
+      />
     </div>
   );
 };

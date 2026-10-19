@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
-import { allPosts, type Post } from '@contentlayer/generated';
 import { PlusIcon } from '@semantic/components/icon';
 import { PostGrid } from '@semantic/components/ui';
 import { ROUTES } from '@semantic/constants';
+import { allPosts, type Post } from '@semantic/lib/content';
 
 import { ProfileGrid } from './_components/profile-grid';
 

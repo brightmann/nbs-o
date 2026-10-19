@@ -1,9 +1,9 @@
 export const METADATA = {
   SITE: {
-    URL: 'https://semantic.nylonbricks.com',
+    URL: 'https://nbs-o.luckypoem.workers.dev',
     NAME: 'semantic',
     DESCRIPTION: 'Make your ✨gorgeous blog with semantic',
-    PREVIEW_IMAGE: 'https://semantic.nylonbricks.com/static/preview.png',
+    PREVIEW_IMAGE: 'https://nbs-o.luckypoem.workers.dev/static/preview.png',
     LANGUAGE: 'en-US',
   },
 
@@ -14,5 +14,5 @@ export const METADATA = {
 };
 
 export const POST = {
-  PER_PAGE: 10,
+  PER_PAGE: 5,
 };

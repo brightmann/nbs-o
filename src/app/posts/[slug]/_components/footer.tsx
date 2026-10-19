@@ -1,8 +1,8 @@
 'use client';
 
-import { Post } from '@contentlayer/generated';
 import { ShareIcon } from '@semantic/components/icon';
 import { METADATA, ROUTES } from '@semantic/constants';
+import { Post } from '@semantic/lib/content';
 
 import { BackButton } from './back-button';
 

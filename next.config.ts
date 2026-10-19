@@ -1,8 +1,11 @@
 import type { NextConfig } from 'next';
-import { withContentlayer } from 'next-contentlayer2';
 
+// Static export for Cloudflare Workers (no OpenNext adapter):
+// no middleware, no API routes, no server features.
 const nextConfig: NextConfig = {
+  output: 'export',
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'http',
@@ -12,4 +15,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withContentlayer(nextConfig);
+export default nextConfig;
